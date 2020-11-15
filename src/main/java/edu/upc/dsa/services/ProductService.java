@@ -2,11 +2,8 @@ package edu.upc.dsa.services;
 
 import edu.upc.dsa.ProductManager;
 import edu.upc.dsa.ProductManagerImp;
-import edu.upc.dsa.TracksManager;
-import edu.upc.dsa.TracksManagerImpl;
 import edu.upc.dsa.models.Order;
 import edu.upc.dsa.models.Product;
-import edu.upc.dsa.models.Track;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -16,11 +13,10 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 
 
-@Api(value = "/products", description = "Endpoint to Track Service")
+@Api(value = "/products", description = "Endpoint to Order Service")
 @Path("/products")
 public class ProductService {
 
@@ -42,7 +38,7 @@ public class ProductService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProductsByPrecio() {
 
-        List<Product> products = this.tm.ListarProductosPrecioAsc();
+        List<Product> products = this.tm.listarProductosPrecioAsc();
 
         GenericEntity<List<Product>> entity = new GenericEntity<List<Product>>(products) {};
         return Response.status(201).entity(entity).build()  ;
@@ -61,7 +57,7 @@ public class ProductService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProductsByVentas() {
 
-        List<Product> products = this.tm.ListarProductosVentasDesc();
+        List<Product> products = this.tm.listarProductosVentasDesc();
 
         GenericEntity<List<Product>> entity = new GenericEntity<List<Product>>(products) {};
         return Response.status(201).entity(entity).build()  ;
@@ -80,9 +76,9 @@ public class ProductService {
     @Path("/pedirorder")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newOrder(Order o) {
-        System.out.println("el hashmapde jordi " +o );
+
         if (o.getNombre()==null) return Response.status(500).entity(o).build();
-        this.tm.RealizarPedido(o);
+        this.tm.realizarPedido(o);
         return Response.status(201).entity(o).build();
     }
 
@@ -91,29 +87,29 @@ public class ProductService {
     @ApiOperation(value = "get a order", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Order.class),
-            @ApiResponse(code = 404, message = "Track not found")
+            @ApiResponse(code = 404, message = "Order not found")
     })
     @Path("/servirorder")
     @Produces(MediaType.APPLICATION_JSON)
     public Response servirOrder() {
 
-        Order o = this.tm.ServirOrder();
+        Order o = this.tm.servirOrder();
         if (o == null) return Response.status(404).build();
         else  return Response.status(201).entity(o).build();
     }
 
 
     @GET
-    @ApiOperation(value = "get ordersbyusuario", notes = "asdasd")
+    @ApiOperation(value = "get orders by usuario", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Order.class, responseContainer="List"),
-            @ApiResponse(code = 404, message = "Track not found")
+            @ApiResponse(code = 404, message = "Order not found")
     })
     @Path("orderbyusuario/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getOrdersByUsuario(@PathParam("id") String id) {
 
-        List<Order> listaOrder = this.tm.ListarOrder(id);
+        List<Order> listaOrder = this.tm.listarOrder(id);
 
         GenericEntity<List<Order>> entity = new GenericEntity<List<Order>>(listaOrder) {};
         return Response.status(201).entity(entity).build()  ;

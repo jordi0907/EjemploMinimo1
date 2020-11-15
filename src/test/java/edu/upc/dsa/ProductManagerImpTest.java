@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class ProductManagerImpTest {
@@ -36,7 +35,7 @@ public class ProductManagerImpTest {
         this.products.add(bocadillo);
 
         this.o1 = new Order("jordi", (ArrayList<Product>) products);
-        this.manager.RealizarPedido(o1);
+        this.manager.realizarPedido(o1);
 
     }
 
@@ -51,14 +50,14 @@ public class ProductManagerImpTest {
     public void testAddOrder() throws Exception {
 
         Assert.assertEquals(1, this.manager.size());
-        this.manager.RealizarPedido(o1);
+        this.manager.realizarPedido(o1);
         Assert.assertEquals(2, this.manager.size());
     }
     @Test
     public void testServerOrder() throws Exception {
 
         Assert.assertEquals(1, this.manager.size());
-        this.manager.ServirOrder();
+        this.manager.servirOrder();
         Assert.assertEquals(0, this.manager.size());
     }
 

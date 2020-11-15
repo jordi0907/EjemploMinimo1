@@ -13,14 +13,17 @@ public class ProductManagerImp implements ProductManager  {
     protected Queue<Order> orders;
     protected HashMap<String, LinkedList<Order>> usuariosContendor;
 
-    Product cafe = new Product("cafe" , 5, 1);
-    Product donut = new Product("donut" , 3, 3);
-    Product bocadillo = new Product("bocadillo" , 10, 2);
-    final static Logger logger = Logger.getLogger(TracksManagerImpl.class);
+    Product cafe;
+    Product donut;
+    Product bocadillo;
+    final static Logger logger = Logger.getLogger(ProductManagerImp.class);
 
     public ProductManagerImp() {
         this.products = new ArrayList<>();
         this.orders = new LinkedList<>();
+        cafe = new Product("cafe" , 5, 1);
+        donut = new Product("donut" , 3, 3);
+        bocadillo = new Product("bocadillo" , 10, 2);
 
         this.products.add(cafe);
         this.products.add(donut);
@@ -40,7 +43,7 @@ public class ProductManagerImp implements ProductManager  {
 
     //Compare prices in ascending order
     @Override
-    public List<Product> ListarProductosPrecioAsc() {
+    public List<Product> listarProductosPrecioAsc() {
 
         Collections.sort(products, new Comparator<Product>() {
             @Override
@@ -55,14 +58,14 @@ public class ProductManagerImp implements ProductManager  {
     }
 
     @Override
-    public void RealizarPedido(Order o) {
+    public void realizarPedido(Order o) {
         orders.add(o);
         logger.info("realizado el pedido " + o);
 
     }
 
     @Override
-    public Order ServirOrder() {
+    public Order servirOrder() {
         Order o = this.orders.poll();
         logger.info("retorna la order " + o);
         String nombre = o.getNombre();
@@ -93,7 +96,7 @@ public class ProductManagerImp implements ProductManager  {
     }
 
     @Override
-    public List<Order> ListarOrder(String usuario) {
+    public List<Order> listarOrder(String usuario) {
         if(usuariosContendor.get(usuario)== null){
             logger.warn("error no existe el usuario: " + usuario);
         }
@@ -102,7 +105,7 @@ public class ProductManagerImp implements ProductManager  {
     }
 
     @Override
-    public List<Product> ListarProductosVentasDesc() {
+    public List<Product> listarProductosVentasDesc() {
         Collections.sort(products, new Comparator<Product>() {
             @Override
             public int compare(Product p1, Product p2) {

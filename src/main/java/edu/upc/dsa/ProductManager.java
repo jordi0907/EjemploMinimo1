@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface ProductManager {
 
-    public List<Product> ListarProductosPrecioAsc();
-    public void RealizarPedido (Order o);
-    public Order ServirOrder();
-    public List<Order> ListarOrder(String usuario);
-    public List<Product> ListarProductosVentasDesc();
+    public List<Product> listarProductosPrecioAsc();
+    public void realizarPedido(Order o);
+    public Order servirOrder();
+    public List<Order> listarOrder(String usuario);
+    public List<Product> listarProductosVentasDesc();
     public void clearOrder();
     public int size();
 
